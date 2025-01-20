@@ -1,10 +1,10 @@
-const fileSys = require('fs');
+const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
 const filePath = path.join(__dirname, 'output.txt');
 
-const writeStream = fileSys.createWriteStream(filePath, {
+const writeStream = fs.createWriteStream(filePath, {
   flags: 'a',
   encoding: 'utf-8',
 });
@@ -14,11 +14,15 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+function clearExit() {
+  console.log('\nThank you! Bye-bye!');
+  writeStream.end();
+  rl.close();
+}
 function promptUser() {
   rl.question('Type your text here (or type "exit" to exit): ', (input) => {
     if (input.toLowerCase() === 'exit') {
-      console.log('Thank you! Bye-bye!');
-      rl.close();
+      clearExit();
       return;
     }
     writeStream.write(input + '\n', (err) => {
@@ -32,9 +36,10 @@ function promptUser() {
   });
 }
 
-promptUser();
-
-process.on('SIGINT', () => {
-  console.log('\nThank you! Bye-bye!');
-  rl.close();
+process.stdin.on('data', function (data) {
+  if (data.toString() === '\u0003') {
+    clearExit();
+  }
 });
+
+promptUser();
