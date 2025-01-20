@@ -18,7 +18,7 @@ fileSys.readdir(secretFolderPath, { withFileTypes: true }, (err, files) => {
             const fileName = path.basename(file.name, path.extname(file.name));
             const sizeInKB = (fileSize / 1024).toFixed(3);
 
-            console.log(`${fileName} | ${fileExtension} | ${sizeInKB}kB`);
+            console.log(`${fileName} - ${fileExtension} - ${sizeInKB}kB`);
         }
     });
 });
