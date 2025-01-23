@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 async function copyDir() {
-    const sourceDir = path.join(__dirname, 'Files');
+    const sourceDir = path.join(__dirname, 'files');
     const destinationDir = path.join(__dirname, 'files-copy');
 
     try {
